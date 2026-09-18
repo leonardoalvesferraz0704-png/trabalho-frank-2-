@@ -1,1 +1,14 @@
+Consulta executada no console D1 (banco: oauth-sessions-frank):
 
+SELECT name, type
+FROM sqlite_schema
+WHERE name NOT LIKE 'sqlite_%'
+ORDER BY type, name;
+
+Resultado:
+
+name                         type
+oauth_transactions_expiry    index
+sessions_expiry              index
+oauth_transactions           table
+sessions                     table
