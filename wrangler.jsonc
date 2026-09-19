@@ -5,5 +5,9 @@
   "assets": {
     "directory": "public",
     "not_found_handling": "404-page"
+  },
+  "vars": {
+    "PUBLIC_BASE_URL": "https://trabalho-frank-2.leonardoalvesferraz0704.workers.dev",
+    "GOOGLE_CLIENT_ID": "224330911887-a6grq0dhaiusb6m9nvv1tfrqhghhvutk.apps.googleusercontent.com"
   }
 }
