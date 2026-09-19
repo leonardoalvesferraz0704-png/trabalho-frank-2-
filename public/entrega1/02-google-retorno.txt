@@ -1,0 +1,6 @@
+URL de retorno cadastrada no Google Cloud Console (OAuth Client - Cliente Web - Laboratorio):
+
+https://trabalho-frank-2.leonardoalvesferraz0704.workers.dev/oauth/callback/google
+
+Tipo de cliente: Aplicativo da Web
+Escopos solicitados: openid, email, profile 
