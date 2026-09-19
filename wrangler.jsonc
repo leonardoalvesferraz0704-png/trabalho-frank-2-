@@ -1,0 +1,9 @@
+{
+  "name": "trabalho-frank-2",
+  "compatibility_date": "2026-09-19",
+  "main": "src/worker.js",
+  "assets": {
+    "directory": "public",
+    "not_found_handling": "404-page"
+  }
+}
