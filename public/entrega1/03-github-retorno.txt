@@ -1,0 +1,13 @@
+
+OAuth App registrada no GitHub (Developer settings > OAuth Apps):
+
+Nome da aplicacao: Laboratorio OAuth Frank
+
+Homepage URL:
+https://trabalho-frank-2.leonardoalvesferraz0704.workers.dev
+
+Authorization callback URL:
+https://trabalho-frank-2.leonardoalvesferraz0704.workers.dev/oauth/callback/github
+
+Device Flow: desativado
+Escopos solicitados: nenhum escopo extra (repo, user:email e offline_access nao foram solicitados)
