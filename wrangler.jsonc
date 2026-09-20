@@ -10,5 +10,12 @@
     "PUBLIC_BASE_URL": "https://trabalho-frank-2.leonardoalvesferraz0704.workers.dev",
     "GOOGLE_CLIENT_ID": "224330911887-a6grq0dhaiusb6m9nvv1tfrqhghhvutk.apps.googleusercontent.com",
     "GITHUB_CLIENT_ID": "0v23ctF8Zf0O7uvfxm6e"
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "oauth-sessions-frank",
+      "database_id": "9775e916-2018-4de2-9a1c-418b6541f28f"
+    }
+  ]
 }
