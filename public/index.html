@@ -9,6 +9,27 @@
  <main>
  <h1>Laboratório de autenticação</h1>
  <p id="status">A sessão ainda não foi consultada.</p>
+
+ <p>
+ <a href="/oauth/login/google">Entrar com Google</a>
+ |
+ <a href="/oauth/login/github">Entrar com GitHub</a>
+ </p>
+
+ <form method="post" action="/oauth/logout">
+ <button type="submit">Sair</button>
+ </form>
  </main>
+
+ <script>
+ fetch("/api/me", { credentials: "same-origin" })
+ .then((response) => (response.ok ? response.json() : null))
+ .then((user) => {
+ const status = document.getElementById("status");
+ status.textContent = user
+ ? `Sessão de ${user.email ?? user.displayName}.`
+ : "Nenhuma sessão neste navegador.";
+ });
+ </script>
  </body>
 </html>
