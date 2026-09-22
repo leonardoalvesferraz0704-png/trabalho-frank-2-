@@ -1,35 +1,202 @@
 <!doctype html>
 <html lang="pt-BR">
- <head>
- <meta charset="utf-8">
- <meta name="viewport" content="width=device-width, initial-scale=1">
- <title>Laboratório de autenticação</title>
- </head>
- <body>
- <main>
- <h1>Laboratório de autenticação</h1>
- <p id="status">A sessão ainda não foi consultada.</p>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratório de autenticação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EFF1EC;
+    --panel: #E4E7DF;
+    --panel-line: #C7CDC2;
+    --ink: #16231F;
+    --ink-soft: #4B5A54;
+    --accent: #C98A3D;
+    --accent-ink: #7A4D19;
+  }
 
- <p>
- <a href="/oauth/login/google">Entrar com Google</a>
- |
- <a href="/oauth/login/github">Entrar com GitHub</a>
- </p>
+  * { box-sizing: border-box; }
 
- <form method="post" action="/oauth/logout">
- <button type="submit">Sair</button>
- </form>
- </main>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+  }
 
- <script>
- fetch("/api/me", { credentials: "same-origin" })
- .then((response) => (response.ok ? response.json() : null))
- .then((user) => {
- const status = document.getElementById("status");
- status.textContent = user
- ? `Sessão de ${user.email ?? user.displayName}.`
- : "Nenhuma sessão neste navegador.";
- });
- </script>
- </body>
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1.25rem;
+  }
+
+  main {
+    width: 100%;
+    max-width: 880px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 0;
+    border: 1px solid var(--panel-line);
+    background: #FBFCFA;
+  }
+
+  .intro {
+    padding: 3rem 2.5rem;
+  }
+
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+    margin: 0 0 1.25rem;
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0 0 1rem;
+  }
+
+  .lede {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 34ch;
+    margin: 0 0 2.25rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    text-decoration: none;
+    padding: 0.7rem 1.1rem;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  }
+
+  .btn:hover, .btn:focus-visible {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .btn.primary {
+    border-color: var(--accent-ink);
+    background: var(--accent);
+    color: #FBFCFA;
+  }
+
+  .btn.primary:hover, .btn.primary:focus-visible {
+    background: var(--accent-ink);
+    border-color: var(--accent-ink);
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--accent-ink);
+    outline-offset: 2px;
+  }
+
+  .panel {
+    background: var(--panel);
+    border-left: 1px solid var(--panel-line);
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .readout {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  #status {
+    margin: 0;
+  }
+
+  form {
+    margin: 2rem 0 0;
+  }
+
+  .btn.ghost {
+    width: 100%;
+    border-color: var(--panel-line);
+    color: var(--ink-soft);
+    background: #FBFCFA;
+  }
+
+  .btn.ghost:hover, .btn.ghost:focus-visible {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+
+  @media (max-width: 640px) {
+    main {
+      grid-template-columns: 1fr;
+    }
+    .panel {
+      border-left: none;
+      border-top: 1px solid var(--panel-line);
+    }
+    .intro, .panel {
+      padding: 2rem 1.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="intro">
+    <p class="tag">laboratório · oauth2 + pkce</p>
+    <h1>Laboratório de autenticação</h1>
+    <p class="lede">
+      Esta página confirma sua identidade pelo Google ou pelo GitHub e guarda
+      apenas uma sessão local, neste navegador. Nenhum token chega até aqui.
+    </p>
+    <div class="actions">
+      <a class="btn primary" href="/oauth/login/google">Entrar com Google</a>
+      <a class="btn" href="/oauth/login/github">Entrar com GitHub</a>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="readout">
+      <p id="status">A sessão ainda não foi consultada.</p>
+    </div>
+    <form method="post" action="/oauth/logout">
+      <button class="btn ghost" type="submit">Sair</button>
+    </form>
+  </div>
+</main>
+
+<script>
+  fetch("/api/me", { credentials: "same-origin" })
+    .then((response) => (response.ok ? response.json() : null))
+    .then((user) => {
+      const status = document.getElementById("status");
+      status.textContent = user
+        ? `Sessão de ${user.email ?? user.displayName}.`
+        : "Nenhuma sessão neste navegador.";
+    });
+</script>
+</body>
 </html>
